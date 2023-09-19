@@ -1,2 +1,2 @@
-# online-book-finder
+# Online Book Finder
 React.js based inline books finder 
