@@ -31,7 +31,7 @@ const Catalogue: React.FC = () => {
           {items.length ? items.map((book) => (
             <Link
               key={book.id}
-              to={`/book/${book.id}/details`}
+              to={`/books/${book.id}/details`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <ListItem button>

@@ -1,5 +1,5 @@
 import { IBooksProvider } from "../../interfaces/BooksProvider";
-import { BooksResponse } from "../../interfaces/books";
+import { BookDetails, BooksResponse } from "../../interfaces/books";
 
 export class GoogleBooksProvider implements IBooksProvider {
     private baseURL: string = 'https://www.googleapis.com/books/v1/volumes';
@@ -23,7 +23,7 @@ export class GoogleBooksProvider implements IBooksProvider {
         }
     }
 
-    async getBookDetails(bookId: string): Promise<any> {
+    async getBookDetails(bookId: string): Promise<BookDetails> {
         try {
             const response = await fetch(`${this.baseURL}/${bookId}`);
 

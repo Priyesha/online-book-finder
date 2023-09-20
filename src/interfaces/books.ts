@@ -1,24 +1,48 @@
 export interface ImageLinks {
     smallThumbnail: string;
     thumbnail: string;
+    small?: string; 
+}
+
+interface ReadingModes {
+    text: boolean;
+    image: boolean;
+}
+
+interface PanelizationSummary {
+    containsEpubBubbles: boolean;
+    containsImageBubbles: boolean;
 }
 
 export interface VolumeInfo {
     title: string;
+    subtitle?: string; 
     authors: string[];
     publisher: string;
     publishedDate: string;
     description: string;
     industryIdentifiers: { type: string; identifier: string }[];
+    readingModes?: ReadingModes; 
     pageCount: number;
+    printedPageCount?: number; 
+    printType?: string; 
     categories: string[];
     averageRating?: number;
     ratingsCount?: number;
+    maturityRating?: string; 
+    allowAnonLogging?: boolean; 
+    contentVersion?: string; 
+    panelizationSummary?: PanelizationSummary; 
     imageLinks: ImageLinks;
     language: string;
     previewLink: string;
     infoLink: string;
     canonicalVolumeLink: string;
+}
+
+interface Layer {
+    layerId: string;
+    volumeAnnotationsVersion: string;
 }
 
 export interface SaleInfo {
@@ -34,6 +58,17 @@ export interface SaleInfo {
         currencyCode: string;
     };
     buyLink: string;
+    offers?: { 
+        finskyOfferType: number;
+        listPrice: {
+            amountInMicros: number;
+            currencyCode: string;
+        };
+        retailPrice: {
+            amountInMicros: number;
+            currencyCode: string;
+        };
+    }[];
 }
 
 export interface AccessInfo {
@@ -48,16 +83,21 @@ export interface AccessInfo {
     };
     pdf: {
         isAvailable: boolean;
-        acsTokenLink?: string;
     };
     webReaderLink: string;
     accessViewStatus: string;
+    quoteSharingAllowed?: boolean; 
 }
 
 export interface BookDetails {
+    kind: string;
     id: string;
+    etag?: string; 
     selfLink: string;
     volumeInfo: VolumeInfo;
+    layerInfo?: { 
+        layers: Layer[];
+    };
     saleInfo: SaleInfo;
     accessInfo: AccessInfo;
 }

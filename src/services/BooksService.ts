@@ -1,5 +1,5 @@
 import { IBooksProvider } from "../interfaces/BooksProvider";
-import { BooksResponse } from "../interfaces/books";
+import { BookDetails, BooksResponse } from "../interfaces/books";
 
 class BooksService {
   private provider: IBooksProvider;
@@ -12,7 +12,7 @@ class BooksService {
     return this.provider.searchBooks(query, pageNumber, recordsPerPage)
   }
 
-  async getBookDetails(bookId: string): Promise<any> {
+  async getBookDetails(bookId: string): Promise<BookDetails | null> {
     return this.provider.getBookDetails(bookId)
   }
 }

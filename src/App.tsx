@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Catalogue from './pages/Catalogue';
 import { AccountCircle } from '@mui/icons-material';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import BookDetails from './pages/BookDetails';
 
 function App() {
     return (
@@ -23,8 +24,8 @@ function App() {
         </AppBar>
         <Router>
             <Routes>
-                <Route path="/" Component={Catalogue}>
-                </Route>
+                <Route path="/" Component={Catalogue} />
+                <Route path="/books/:bookId/details" Component={BookDetails} />
             </Routes>
         </Router>
       </div>
