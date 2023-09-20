@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Search from '../components/Search';
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, Card } from '@mui/material';
+import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, Card, Pagination, Typography, CircularProgress } from '@mui/material';
 import { Link, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import BooksService from '../services/BooksService';
 import { BooksResponse } from '../interfaces/books'
@@ -12,40 +12,52 @@ const Catalogue: React.FC = () => {
     totalItems: 0,
     items: []
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const query = params.get('query') || '';
+  const pageNumber = Number(params.get('pageNumber')) || 1;
+  const recordsPerPage = Number(params.get('recordsPerPage')) || 5;
 
   // We can provide any other API provider in future as well.
   const googleBooksService = new BooksService(new GoogleBooksProvider());
 
   const fetchBooks = async (query: string, pageNumber: number, recordsPerPage: number) => {
+    setIsLoading(true);
     const data = await googleBooksService.searchBooks(query, pageNumber, recordsPerPage);
     if(data) {
         setBooksData(data)
     }
+    setIsLoading(false);
   };
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string, pageNumber: string = '1' ) => {
     navigate({
         pathname: location.pathname,
-        search: createSearchParams({ query , pageNumber: '1', recordsPerPage: '5' }).toString()
+        search: createSearchParams({ query , pageNumber, recordsPerPage: '5' }).toString()
     })
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get('query') || '';
-    const pageNumber = Number(params.get('pageNumber')) || 1;
-    const recordsPerPage = Number(params.get('recordsPerPage')) || 5;
     if(query)
         fetchBooks(query, pageNumber, recordsPerPage);
   }, [location.search]);
 
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, pageNumber: number) =>
+    handleSearch(query, pageNumber.toString())
+
   const renderBookList = () => {
     const { items } = booksData;
     return (
-        <Card variant="outlined" style={{ width: '80%', margin: '2rem auto', padding: '1rem' }}>
-        <List>
+        <Card variant="outlined" sx={{ width: '60%', margin: '2rem auto', padding: '1rem', alignItems: 'center' }}>
+        {query && <Typography variant="h6">Search results for "{query}"</Typography>}
+        {isLoading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+            <CircularProgress />
+          </Box>
+        ) : (<List>
           {items.length ? items.map((book) => (
             <Link
               key={book.id}
@@ -65,7 +77,14 @@ const Catalogue: React.FC = () => {
               </ListItem>
             </Link>
           )) : 'No books found'}
-        </List>
+        </List>)
+        }
+        <Pagination 
+          count={Math.ceil(booksData.totalItems / 5)} 
+          page={pageNumber}
+          onChange={handlePageChange}
+          style={{ marginTop: '1rem' }}
+        />
         </Card>
       );
   }

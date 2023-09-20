@@ -23,7 +23,7 @@ const Search: React.FC<SearchProps> = ({
 
   return (
     <Card
-      variant="outlined"
+      variant="elevation"
       style={{
         width: "60%",
         margin: "1rem auto",
