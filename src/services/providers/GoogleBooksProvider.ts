@@ -1,7 +1,8 @@
 import { IBooksProvider } from "../../interfaces/BooksProvider";
 import { BookDetails, BooksResponse } from "../../interfaces/books";
+import BooksService from "../BooksService";
 
-export class GoogleBooksProvider implements IBooksProvider {
+class GoogleBooksProvider implements IBooksProvider {
     private baseURL: string = 'https://www.googleapis.com/books/v1/volumes';
 
     async searchBooks(query: string, pageNumber: number, recordsPerPage: number = 10): Promise<BooksResponse | null> {
@@ -39,3 +40,5 @@ export class GoogleBooksProvider implements IBooksProvider {
         }
     }
 }
+
+export const GoogleBooksService = new BooksService(new GoogleBooksProvider());

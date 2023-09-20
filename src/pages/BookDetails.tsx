@@ -11,27 +11,16 @@ import {
   useTheme,
 } from "@mui/material";
 import StarRating from "../components/StarRating";
-import BooksService from "../services/BooksService";
-import { GoogleBooksProvider } from "../services/providers/GoogleBooksProvider";
+import { GoogleBooksService } from "../services/providers/GoogleBooksProvider";
 import { useParams } from "react-router-dom";
 import { BookDetails } from "../interfaces/books";
 
-interface BookItemProps {
-  title?: string;
-  authors?: string[];
-  publishedDate?: string;
-  thumbnail?: string;
-  description?: string;
-  categories?: string[];
-  averageRating?: number;
-  ratingsCount?: number;
-}
+interface BookItemProps {}
 
 const BookItem: React.FC<BookItemProps> = () => {
   const [showMore, setShowMore] = useState(false);
   const { bookId } = useParams<{ bookId: string }>();
   const [bookDetail, setBookDetail] = useState<BookDetails | null>(null);
-  const googleBooksService = new BooksService(new GoogleBooksProvider());
 
   const theme = useTheme();
 
@@ -63,7 +52,7 @@ const BookItem: React.FC<BookItemProps> = () => {
     const fetchBookDetail = async () => {
       try {
         if (!bookId) return;
-        const data = await googleBooksService.getBookDetails(bookId);
+        const data = await GoogleBooksService.getBookDetails(bookId);
         setBookDetail(data);
         console.log("data===>", data);
       } catch (error) {

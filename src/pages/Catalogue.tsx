@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Search from '../components/Search';
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, Card, Pagination, Typography, CircularProgress } from '@mui/material';
 import { Link, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
-import BooksService from '../services/BooksService';
 import { BooksResponse } from '../interfaces/books'
-import { GoogleBooksProvider } from '../services/providers/GoogleBooksProvider';
+import { GoogleBooksService } from '../services/providers/GoogleBooksProvider';
 
 const Catalogue: React.FC = () => {
   const [booksData, setBooksData] = useState<BooksResponse>({
@@ -21,12 +20,9 @@ const Catalogue: React.FC = () => {
   const pageNumber = Number(params.get('pageNumber')) || 1;
   const recordsPerPage = Number(params.get('recordsPerPage')) || 5;
 
-  // We can provide any other API provider in future as well.
-  const googleBooksService = new BooksService(new GoogleBooksProvider());
-
   const fetchBooks = async (query: string, pageNumber: number, recordsPerPage: number) => {
     setIsLoading(true);
-    const data = await googleBooksService.searchBooks(query, pageNumber, recordsPerPage);
+    const data = await GoogleBooksService.searchBooks(query, pageNumber, recordsPerPage);
     if(data) {
         setBooksData(data)
     }
