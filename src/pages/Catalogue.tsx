@@ -4,6 +4,7 @@ import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, Card } from 
 import { Link } from 'react-router-dom';
 import BooksService from '../services/BooksService';
 import { BooksResponse } from '../interfaces/books'
+import { GoogleBooksProvider } from '../services/providers/GoogleBooksProvider';
 
 const Catalogue: React.FC = () => {
   const [booksData, setBooksData] = useState<BooksResponse>({
@@ -12,8 +13,11 @@ const Catalogue: React.FC = () => {
     items: []
   });
 
+  // We can provide any other API provider in future as well.
+  const googleBooksService = new BooksService(new GoogleBooksProvider());
+
   const handleSearch = async (query: string) => {
-    const data = await BooksService.searchBooks(query, 1, 20);
+    const data = await googleBooksService.searchBooks(query, 1, 5);
     if(data) {
         setBooksData(data)
     }
