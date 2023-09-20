@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Search from '../components/Search';
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Box, Card } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import BooksService from '../services/BooksService';
 import { BooksResponse } from '../interfaces/books'
 import { GoogleBooksProvider } from '../services/providers/GoogleBooksProvider';
@@ -12,16 +12,34 @@ const Catalogue: React.FC = () => {
     totalItems: 0,
     items: []
   });
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // We can provide any other API provider in future as well.
   const googleBooksService = new BooksService(new GoogleBooksProvider());
 
-  const handleSearch = async (query: string) => {
-    const data = await googleBooksService.searchBooks(query, 1, 5);
+  const fetchBooks = async (query: string, pageNumber: number, recordsPerPage: number) => {
+    const data = await googleBooksService.searchBooks(query, pageNumber, recordsPerPage);
     if(data) {
         setBooksData(data)
     }
   };
+
+  const handleSearch = (query: string) => {
+    navigate({
+        pathname: location.pathname,
+        search: createSearchParams({ query , pageNumber: '1', recordsPerPage: '5' }).toString()
+    })
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const query = params.get('query') || '';
+    const pageNumber = Number(params.get('pageNumber')) || 1;
+    const recordsPerPage = Number(params.get('recordsPerPage')) || 5;
+    if(query)
+        fetchBooks(query, pageNumber, recordsPerPage);
+  }, [location.search]);
 
   const renderBookList = () => {
     const { items } = booksData;
