@@ -52,6 +52,10 @@ const Search: React.FC<SearchProps> = ({
               </Button>
             </InputAdornment>
           ),
+          onKeyDown: (e) => {
+            if(e.key === 'Enter')
+              handleSubmit()
+          }
         }}
       />
     </Card>

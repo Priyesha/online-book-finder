@@ -77,12 +77,13 @@ const Catalogue: React.FC = () => {
           )) : 'Search books by typing in search bar'}
         </List>)
         }
+        {items.length ? 
         <Pagination 
           count={Math.ceil(booksData.totalItems / 5)} 
           page={pageNumber}
           onChange={handlePageChange}
           style={{ marginTop: '1rem' }}
-        />
+        /> : null}
         </Card>
       );
   }
