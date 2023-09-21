@@ -58,6 +58,7 @@ const Catalogue: React.FC = () => {
             <Link
               key={book.id}
               to={`/books/${book.id}/details`}
+              state={{searchQuery: query }}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <ListItem button>
@@ -66,9 +67,10 @@ const Catalogue: React.FC = () => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={book.volumeInfo.title}
-                  secondary={`Authors : ${book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : ''} | Date : ${new Date(
+                  secondary={`Authors : ${book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : ''} |
+                  Date : ${new Date(
                     book.volumeInfo.publishedDate
-                  ).getFullYear()} | Rating: ${book.volumeInfo.averageRating}`}
+                  ).getFullYear() || 'N/A'} | Rating: ${book.volumeInfo.averageRating || 'N/A'}`}
                 />
               </ListItem>
             </Link>

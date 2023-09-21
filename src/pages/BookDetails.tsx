@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import StarRating from "../components/StarRating";
 import { GoogleBooksService } from "../services/providers/GoogleBooksProvider";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BookDetails } from "../interfaces/books";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 interface BookItemProps {}
 
@@ -23,6 +25,8 @@ const BookItem: React.FC<BookItemProps> = () => {
   const [bookDetail, setBookDetail] = useState<BookDetails | null>(null);
 
   const theme = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const styles = {
     cardWidth: {
@@ -86,6 +90,13 @@ const BookItem: React.FC<BookItemProps> = () => {
       variant="outlined"
       sx={{ ...styles.cardWidth, marginBottom: 16, margin: "1rem auto" }}
     >
+      <Button
+        onClick={() => navigate(`/?query=${location.state.searchQuery}`)}
+        style={{ marginLeft: '1rem' }}
+        startIcon={<ArrowBackIcon />}
+      >
+        Back to Search
+      </Button>
       <CardHeader
         title={bookDetail?.volumeInfo?.title}
         subheader={<>
