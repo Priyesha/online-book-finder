@@ -39,7 +39,7 @@ describe("<Catalogue />", () => {
     const searchElement = screen.getByPlaceholderText(/Search for books/i);
     fireEvent.change(searchElement, { target: { value: "Rich Dad" } });
 
-    const searchButton = screen.getByText(/Search/i);
+    const searchButton = screen.getByTestId('search-button');
     await act(async () => {
       fireEvent.click(searchButton);
     });

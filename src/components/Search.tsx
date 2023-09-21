@@ -46,6 +46,7 @@ const Search: React.FC<SearchProps> = ({
                 color="primary"
                 variant="contained"
                 size="large"
+                data-testid='search-button'
                 startIcon={<SearchIcon />}
               >
                 Search
