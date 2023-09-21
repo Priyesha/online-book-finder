@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# Online Book Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Online Book Finder project  allows users to search for books and retrieve detailed information about them.
 
-## Available Scripts
+## Demo Link
 
-In the project directory, you can run:
+**[Online Book Finder](https://online-book-finder.vercel.app/)**
+## Table of Contents
 
-### `npm start`
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
+- [Tools Used](#tools-used)
+- [Future Considerations](#future-considerations)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Pages
 
-### `npm test`
+- **Catalogue**: Enter the book you want to find in input box and it would list the search results with pagination support
+- **Book Details**: Shows details of any book including its authors, publication date, ratings, and more.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To get started with the development environment, you will need:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. Clone the repository:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+   git clone https://github.com/Priyesha/online-book-finder.git
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Navigate to the project directory:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+cd online-book-finder
+npm install
+# or yarn install
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Running the App
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To run tests, you can run
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm test
+```
+
+## Tools Used
+
+- **React CRA**: Used create-react-app standard react template that provides the basic barebone react app with needed scripts.
+  
+- **TypeScript**: Is used to provide type safe and maintainable code.
+  
+- **React Material-UI**: MUI provides components that implement Google's Material Design and can be customized using theme variables and styled components
+
+- **react-router-dom**: Used to register various routes.
+
+- **jest and react-testing-library**: To write unit tests for the components to check their behaviour
+
+- **Vercel**: Used to quickly deploy and spin up a basic CI/CD pipeline that deploys the code when you push to main branch
+
+## Future Considerations
+
+- **Server Side rendering** : This app can be converted into a Next.js app that gives server side rendering capabilities. That would help in SEO of app. For the same reason search queries are included in query params to help the web crawlers rank the results (for eg: search for "harry potter books" can rank our page of https://online-book-finder.vercel.app/?query=harry+potter)
+
+- **End to end tests** : Can be written using cypress to check the behaviour of app stays same with new changes pushed.
