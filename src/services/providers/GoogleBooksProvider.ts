@@ -2,7 +2,7 @@ import { IBooksProvider, SearchOptions } from "../../interfaces/BooksProvider";
 import { BookDetails, BooksResponse } from "../../interfaces/books";
 import BooksService from "../BooksService";
 
-class GoogleBooksProvider implements IBooksProvider {
+export class GoogleBooksProvider implements IBooksProvider {
   private baseURL: string = 'https://www.googleapis.com/books/v1/volumes';
 
   private constructQueryString(options: SearchOptions): string {
