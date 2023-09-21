@@ -80,3 +80,18 @@ export const mockBookList = {
       }
     ]
   }
+
+export const mockBookDetails = {
+  volumeInfo: {
+    title: 'Sample Title',
+    authors: ['Author 1', 'Author 2'],
+    description: 'Sample description with more than thirty words. This will allow us to test the show more and show less functionality in the component.',
+    publishedDate: '2023',
+    categories: ['Category 1', 'Category 2'],
+    averageRating: 4.5,
+    ratingsCount: 150,
+    imageLinks: {
+      thumbnail: 'sample-thumbnail.jpg'
+    }
+  }
+};

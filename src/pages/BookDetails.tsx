@@ -23,7 +23,7 @@ const BookItem: React.FC<BookItemProps> = () => {
   const [showMore, setShowMore] = useState(false);
   const { bookId } = useParams<{ bookId: string }>();
   const [bookDetail, setBookDetail] = useState<BookDetails | null>(null);
-
+  
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,7 +58,6 @@ const BookItem: React.FC<BookItemProps> = () => {
         if (!bookId) return;
         const data = await GoogleBooksService.getBookDetails(bookId);
         setBookDetail(data);
-        console.log("data===>", data);
       } catch (error) {
         console.error("Error fetching book details:", error);
       }
@@ -118,6 +117,7 @@ const BookItem: React.FC<BookItemProps> = () => {
           alt={title}
           sx={styles.media}
           image={thumbnail}
+          data-testid="book-thumbnail"
         />
         <CardContent sx={styles.content}>
           <Box
@@ -141,7 +141,7 @@ const BookItem: React.FC<BookItemProps> = () => {
           </Box>
           {categories &&
             categories.map((category, index) => (
-              <Chip key={index} label={category} style={{ margin: 2 }} />
+              <Chip data-testid='category-chip' key={index} label={category} style={{ margin: 2 }} />
             ))}
         </CardContent>
       </Box>

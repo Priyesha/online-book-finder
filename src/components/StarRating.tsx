@@ -17,12 +17,12 @@ const StarRating: React.FC<StarRatingProps> = ({
 
       {[...Array(5)].map((_, i) => {
         if (i < Math.floor(averageRating)) {
-          return <Star key={i} style={{ color: "gold" }} />;
+          return <Star data-testid="full-star" key={i} style={{ color: "gold" }} />;
         }
         if (i < averageRating) {
-          return <StarHalf key={i} style={{ color: "gold" }} />;
+          return <StarHalf data-testid="half-star" key={i} style={{ color: "gold" }} />;
         }
-        return <StarBorder key={i} style={{ color: "gold" }} />;
+        return <StarBorder data-testid="bordered-star" key={i} style={{ color: "gold" }} />;
       })}
       <Typography
         variant="body2"
