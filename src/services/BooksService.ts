@@ -1,4 +1,4 @@
-import { IBooksProvider } from "../interfaces/BooksProvider";
+import { IBooksProvider, SearchOptions } from "../interfaces/BooksProvider";
 import { BookDetails, BooksResponse } from "../interfaces/books";
 
 class BooksService {
@@ -8,8 +8,8 @@ class BooksService {
       this.provider = provider;
   }
 
-  async searchBooks(query: string, pageNumber: number, recordsPerPage: number = 10): Promise<BooksResponse | null> {
-    return this.provider.searchBooks(query, pageNumber, recordsPerPage)
+  async searchBooks(options: SearchOptions): Promise<BooksResponse | null> {
+    return this.provider.searchBooks(options)
   }
 
   async getBookDetails(bookId: string): Promise<BookDetails | null> {

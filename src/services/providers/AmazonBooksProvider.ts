@@ -1,9 +1,9 @@
-import { IBooksProvider } from "../../interfaces/BooksProvider";
+import { IBooksProvider, SearchOptions } from "../../interfaces/BooksProvider";
 
 export class AmazonBooksProvider implements IBooksProvider {
     private baseURL: string = 'https://amazon.api.endpoint'; // Placeholder URL
 
-    async searchBooks(query: string, pageNumber: number, recordsPerPage: number = 10): Promise<any> {
+    async searchBooks(options: SearchOptions): Promise<any> {
         // Future Implementation for Amazon's API
     }
 
@@ -11,3 +11,4 @@ export class AmazonBooksProvider implements IBooksProvider {
         // Future Implementation for Amazon's API
     }
 }
+

@@ -57,6 +57,8 @@ const BookItem: React.FC<BookItemProps> = () => {
     const fetchBookDetail = async () => {
       try {
         if (!bookId) return;
+        // Can also call the bookDetails using selfLink like:
+        // const data = location.state?.selfLink ? await fetch(location.state.selfLink) : null
         const data = await GoogleBooksService.getBookDetails(bookId);
         setBookDetail(data);
       } catch (error: unknown) {
@@ -78,8 +80,8 @@ const BookItem: React.FC<BookItemProps> = () => {
     ratingsCount,
   } = bookDetail?.volumeInfo || {};
   const thumbnail =
-    bookDetail?.volumeInfo.imageLinks.thumbnail ||
-    bookDetail?.volumeInfo.imageLinks.smallThumbnail ||
+    bookDetail?.volumeInfo.imageLinks?.thumbnail ||
+    bookDetail?.volumeInfo.imageLinks?.smallThumbnail ||
     "";
   const truncatedDescription = `${description
     .split(" ")
@@ -142,7 +144,7 @@ const BookItem: React.FC<BookItemProps> = () => {
       sx={{ ...styles.cardWidth, marginBottom: 16, margin: "1rem auto" }}
     >
       <Button
-        onClick={() => navigate(`/?query=${location.state ? location.state.searchQuery : ''}`)}
+        onClick={() => navigate(`/${location.state?.query || ''}`)}
         style={{ marginLeft: '1rem' }}
         startIcon={<ArrowBackIcon />}
       >
