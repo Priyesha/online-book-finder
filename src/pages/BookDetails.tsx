@@ -23,7 +23,8 @@ const BookItem: React.FC<BookItemProps> = () => {
   const [showMore, setShowMore] = useState(false);
   const { bookId } = useParams<{ bookId: string }>();
   const [bookDetail, setBookDetail] = useState<BookDetails | null>(null);
-  
+  const [fetchError, setFetchError] = useState('');
+
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,8 +59,9 @@ const BookItem: React.FC<BookItemProps> = () => {
         if (!bookId) return;
         const data = await GoogleBooksService.getBookDetails(bookId);
         setBookDetail(data);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Error fetching book details:", error);
+        setFetchError((error as Error).message) 
       }
     };
 
@@ -84,19 +86,8 @@ const BookItem: React.FC<BookItemProps> = () => {
     .slice(0, 30)
     .join(" ")}...`;
 
-  return (
-    <Card
-      variant="outlined"
-      sx={{ ...styles.cardWidth, marginBottom: 16, margin: "1rem auto" }}
-    >
-      <Button
-        onClick={() => navigate(`/?query=${location.state.searchQuery}`)}
-        style={{ marginLeft: '1rem' }}
-        startIcon={<ArrowBackIcon />}
-      >
-        Back to Search
-      </Button>
-      <CardHeader
+  const renderBookDetails = () => (<>
+    <CardHeader
         title={bookDetail?.volumeInfo?.title}
         subheader={<>
             {`by ${authors.join(", ")} | Published: ${publishedDate}`}
@@ -108,9 +99,7 @@ const BookItem: React.FC<BookItemProps> = () => {
             ) : null}
         </>}
       >
-        
       </CardHeader>
-      
       <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} padding="1rem">
         <CardMedia
           component="img"
@@ -145,6 +134,24 @@ const BookItem: React.FC<BookItemProps> = () => {
             ))}
         </CardContent>
       </Box>
+  </>)
+
+  return (
+    <Card
+      variant="outlined"
+      sx={{ ...styles.cardWidth, marginBottom: 16, margin: "1rem auto" }}
+    >
+      <Button
+        onClick={() => navigate(`/?query=${location.state ? location.state.searchQuery : ''}`)}
+        style={{ marginLeft: '1rem' }}
+        startIcon={<ArrowBackIcon />}
+      >
+        Back to Search
+      </Button>
+      {fetchError ? (<CardHeader
+        title={"Book not found!"}
+        subheader={"Looks like the book you're searching for is not in our records."}
+      />) : renderBookDetails()}
     </Card>
   );
 };

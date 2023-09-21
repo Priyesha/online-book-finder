@@ -74,7 +74,7 @@ const Catalogue: React.FC = () => {
                 />
               </ListItem>
             </Link>
-          )) : 'No books found'}
+          )) : 'Search books by typing in search bar'}
         </List>)
         }
         <Pagination 
